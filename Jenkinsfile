@@ -6,13 +6,13 @@ pipeline {
   
     stage("build") {
       steps {
-        echo 'building the app.. ${NAME}'
+        echo 'building the app.. NAME:' ${NAME}
       }
     }
     
     stage("test") {
       steps {
-        echo 'testing the app..${Gender}'
+        echo "testing the app.. ${Gender}"
       }
     }
     
