@@ -1,0 +1,30 @@
+def HELM_CHART = '0.1.2-9f3188a68'
+pipeline {
+    agent any
+    options{
+        timestamps()
+        }
+    parameters {
+        booleanParam(name: 'CLICKTOCONTINUE', defaultValue: false, description: 'Are you sure?')
+    }
+    stages {
+        stage('Start') {
+            steps {
+                echo 'Starting...'
+            }
+        }
+        stage ('Deleteing Pod Stage') {
+            when {
+                expression { params.CLICKTOCONTINUE == true }
+            }
+            steps {
+                echo "====== >  Deleting pod..."
+            }
+        }
+        stage('End') {
+            steps {
+                echo 'End'
+            }
+        }
+    }
+}

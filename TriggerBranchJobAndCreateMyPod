@@ -1,0 +1,46 @@
+pipeline {
+agent any
+
+parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'SOLVE-3676-trigger-jenkins-job-remotely', description: 'Name of the branch to build.')
+        booleanParam(name: 'DELETE_EXISTING_POD', defaultValue: true, description: 'Delete existing pod?')
+        string(name: 'BUILDTAG', defaultValue: '0.2.8832', description: 'Name of the branch to build.')
+        string(name: 'PD_BUILD', defaultValue: '0.1.1521', description: 'Process Discovery Helm Chart Version - REQUIRED.')
+        booleanParam(name: 'POSTGRES', defaultValue: false, description: 'Use POSTGRES as the database.  US-WEST region pods only.  Will not work with MUMBAI pods.  Uncheck if creating a pod in the Mumbai region.')
+}
+
+    stages {
+        stage('Start') {
+            steps {
+                echo 'Hello.. Starting...'
+            }
+        }
+        stage ('Invoke_MyFirstSecondJob') {
+            steps {
+                build job: "${params.BRANCH_NAME}"
+            }
+            when {
+                expression { params.DELETE_EXISTING_POD == true }
+            }
+            steps {
+                build job: 'DeleteMyPod',
+                parameters: [
+                    booleanParam(name: 'CLICKTOCONTINUE', value: "${params.DELETE_EXISTING_POD}")
+                ]
+            }
+            steps {
+                build job: 'CreateMyPod',
+                parameters: [
+                    string(name: 'BUILDTAG', value: "${params.BUILDTAG}"),
+                    string(name: 'PD_BUILD', value: "${params.PD_BUILD}"),
+                    booleanParam(name: 'POSTGRES', value: "${params.POSTGRES}")
+                ]
+            }
+        }
+        stage('End') {
+            steps {
+                echo 'Bye.. Finished.'
+            }
+        }
+    }
+}

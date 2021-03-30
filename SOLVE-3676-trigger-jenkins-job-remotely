@@ -1,0 +1,25 @@
+def HELM_CHART = '0.1.2-9f3188a68'
+pipeline {
+agent any
+options{
+        timestamps()
+        }
+    stages {
+        stage('Start') {
+            steps {
+                echo 'Starting...'
+            }
+        }
+        stage ('Executing Build') {
+            steps {
+                echo 'Building SOLVE-3676-trigger-jenkins-job-remotely..'
+                echo "====== >  Helm Chart is ${HELM_CHART}"
+            }
+        }
+        stage('End') {
+            steps {
+                echo 'End'
+            }
+        }
+    }
+}
