@@ -1,0 +1,36 @@
+def HELM_CHART = '0.1.2-9f3188a68'
+pipeline {
+    agent any
+    options{
+        timestamps()
+        }
+    parameters {
+        string(name: 'BUILDTAG', defaultValue: '0.2.8832', description: 'Kernel Helm Chart Version - REQUIRED')
+        string(name: 'PD_BUILD', defaultValue: '0.1.1521', description: 'Process Discovery Helm Chart Version - REQUIRED')
+        string(name: 'HBC_BUILD', defaultValue: '0.1.997', description: 'HBC Helm Chart Version - REQUIRED')
+        string(name: 'STORAGE_BUILD', defaultValue: '0.1.21', description: 'STORAGE Helm Chart Version - REQUIRED')
+        string(name: 'IQBACKEND_BUILD', defaultValue: '0.1.52', description: 'IQBACKEND Helm Chart Version - REQUIRED')
+        booleanParam(name: 'MUMBAI', defaultValue: false, description: 'Create the pod in the MUMBAI AWS region')
+        booleanParam(name: 'POSTGRES', defaultValue: true, description: 'Use POSTGRES as the database.  US-WEST region pods only.  Will not work with MUMBAI pods.  Uncheck if creating a pod in the Mumbai region.')
+        booleanParam(name: 'MULTITENANT', defaultValue: false, description: 'Creates a MT pod with four tenants,  This is only for the US-WEST-2 region and MS-SQL (No Postgres).')
+        string(name: 'HELMOPTS', defaultValue: '', description: 'Addition options/overrides for the helm command')
+        string(name: 'USER_EMAIL', defaultValue: '', description: 'optional, enter if you want a email notification one day prior to pod termination')
+    }
+    stages {
+        stage('Start') {
+            steps {
+                echo 'Starting...'
+            }
+        }
+        stage ('Executing Build') {
+            steps {
+                echo "====== >  Executing build...
+            }
+        }
+        stage('End') {
+            steps {
+                echo 'End'
+            }
+        }
+    }
+}
