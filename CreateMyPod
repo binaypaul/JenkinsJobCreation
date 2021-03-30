@@ -24,7 +24,7 @@ pipeline {
         }
         stage ('Executing Build') {
             steps {
-                echo "====== >  Executing build...
+                echo "====== >  Executing build..."
             }
         }
         stage('End') {
