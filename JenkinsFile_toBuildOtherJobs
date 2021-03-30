@@ -14,8 +14,8 @@ parameters {
         }
         stage ('Invoke_MyFirstSecondJob') {
             steps {
-                build job: 'MyFirstJob', parameters: [string(name: 'NAME', value: ${params.NAME}), booleanParam(name: 'Gender', value: ${params.GENDER})]
-                build job: 'MySecondJob', parameters: [string(name: 'NAME', value: ${params.NAME}), booleanParam(name: 'Gender', value: ${params.GENDER})]
+                build job: 'MyFirstJob', parameters: [string(name: 'NAME', value: "${params.NAME}"), booleanParam(name: 'Gender', value: "${params.GENDER}")]
+                build job: 'MySecondJob', parameters: [string(name: 'NAME', value: "${params.NAME}"), booleanParam(name: 'Gender', value: "${params.GENDER}")]
             }
         }
         stage('End') {
