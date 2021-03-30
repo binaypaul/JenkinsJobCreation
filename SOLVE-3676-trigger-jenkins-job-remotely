@@ -11,7 +11,7 @@ def helm_chart = '0.1.2-9f3188a68'
         }
         stage ('Executing Build') {
             steps {
-                echo "====== >  Helm Chart is ${helm_chart}
+                echo "====== >  Helm Chart is ${helm_chart}"
             }
         }
         stage('End') {
