@@ -1,0 +1,30 @@
+pipeline {
+agent
+    {
+        node {
+                label 'master'
+                customWorkspace "${env.JobPath}"
+              }
+    }
+    stages 
+    {
+        stage('Start') {
+            steps {
+                echo 'Hello.. Starting...'
+            }
+        }
+        stage ('Invoke_MyFirstSecondJob') {
+            steps {
+                build job: 'MyFirstJob', parameters: [
+                string(name: 'Name', value: "Anamika"),
+                boolean(name: 'Gender', value: false),
+                ]
+            }
+        }
+        stage('End') {
+            steps {
+                echo 'Bye.. Finished.'
+            }
+        }
+    }
+}
