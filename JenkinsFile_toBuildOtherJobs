@@ -1,13 +1,12 @@
 pipeline {
-agent
-    {
-        node {
-                label 'master'
-                customWorkspace "${env.JobPath}"
-              }
-    }
-    stages 
-    {
+agent any
+
+parameters {
+        string(name: 'NAME', defaultValue: 'Animesh', description: 'Name of the person?')
+        booleanParam(name: 'GENDER', defaultValue: true, description: 'Check if Male, else Uncheck.')
+}
+
+    stages {
         stage('Start') {
             steps {
                 echo 'Hello.. Starting...'
@@ -15,8 +14,8 @@ agent
         }
         stage ('Invoke_MyFirstSecondJob') {
             steps {
-                build job: 'MyFirstJob', parameters: [string(name: 'NAME', value: 'Animesh'), booleanParam(name: 'Gender', value: true)]
-                build job: 'MySecondJob', parameters: [string(name: 'NAME', value: 'Anamika'), booleanParam(name: 'Gender', value: false)]
+                build job: 'MyFirstJob', parameters: [string(name: 'NAME', value: ${params.NAME}), booleanParam(name: 'Gender', value: ${params.GENDER})]
+                build job: 'MySecondJob', parameters: [string(name: 'NAME', value: ${params.NAME}), booleanParam(name: 'Gender', value: ${params.GENDER})]
             }
         }
         stage('End') {
