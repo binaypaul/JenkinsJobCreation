@@ -1,8 +1,9 @@
+def HELM_CHART = '0.1.2-9f3188a68'
 pipeline {
 agent any
-
-def helm_chart = '0.1.2-9f3188a68'
-
+options{
+        timestamps()
+        }
     stages {
         stage('Start') {
             steps {
@@ -11,7 +12,7 @@ def helm_chart = '0.1.2-9f3188a68'
         }
         stage ('Executing Build') {
             steps {
-                echo "====== >  Helm Chart is ${helm_chart}"
+                echo "====== >  Helm Chart is ${HELM_CHART}"
             }
         }
         stage('End') {
@@ -20,4 +21,4 @@ def helm_chart = '0.1.2-9f3188a68'
             }
         }
     }
-}   
+}
