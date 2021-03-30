@@ -17,7 +17,7 @@ agent
             steps {
                 build job: 'MyFirstJob', parameters: [
                 string(name: 'Name', value: "Anamika"),
-                boolean(name: 'Gender', value: false),
+                choice(name: 'Gender', value: false),
                 ]
             }
         }
