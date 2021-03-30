@@ -15,19 +15,28 @@ parameters {
                 echo 'Hello.. Starting...'
             }
         }
-        stage ('Invoke_MyFirstSecondJob') {
+
+        stage ('Invoke_SOLVE-3676-trigger-jenkins-job-remotely_Job') {
             steps {
                 build job: "${params.BRANCH_NAME}"
             }
+        }
+
+        stage ('Invoke_DeleteMyPod_Job') {
             when {
                 expression { params.DELETE_EXISTING_POD == true }
             }
             steps {
-                build job: 'DeleteMyPod',
-                parameters: [
-                    booleanParam(name: 'CLICKTOCONTINUE', value: "${params.DELETE_EXISTING_POD}")
-                ]
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    build job: 'DeleteMyPod',
+                    parameters: [
+                        booleanParam(name: 'CLICKTOCONTINUE', value: "${params.DELETE_EXISTING_POD}")
+                    ]
+                }
             }
+        }
+
+        stage ('Invoke_CreateMyPod_Job') {
             steps {
                 build job: 'CreateMyPod',
                 parameters: [
@@ -37,6 +46,7 @@ parameters {
                 ]
             }
         }
+
         stage('End') {
             steps {
                 echo 'Bye.. Finished.'
