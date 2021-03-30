@@ -15,9 +15,10 @@ agent
         }
         stage ('Invoke_MyFirstSecondJob') {
             steps {
-                build job: 'MyFirstJob', parameters: [
-                string(name: 'Name', value: "Anamika"),
-                choice(name: 'Gender', value: false),
+                build job: 'MyFirstJob', 
+                parameters: [
+                    string(name: 'NAME', value: 'Binay'), 
+                    booleanParam(name: 'Gender', value: true)
                 ]
             }
         }
